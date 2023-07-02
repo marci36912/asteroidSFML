@@ -1,0 +1,22 @@
+#pragma once
+
+#define MAXFPS 60
+
+#define WIN_HEIGTH 800
+#define WIN_WIDTH 1200
+
+#define SPEED 10
+#define MAXSPEED 5
+#define ROTATESPEED 10
+#define LIVES 5
+#define DEATHCOOLDOWN 5
+
+#define BULLETSPEED 400
+#define BULLETLIFESPAM 3
+#define BULLETAMMOUNT 5
+#define COOLDOWN 1
+#define COOLDOWNMAX 1.5
+
+#define ASTEROIDSPEED 80
+
+#define ASTEROIDSPAWNCOOLDOWN 5

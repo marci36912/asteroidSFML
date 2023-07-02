@@ -1,0 +1,25 @@
+LSFML=-L../SFML-2.5.1/lib -lsfml-graphics -lsfml-window -lsfml-system
+ISFML=-I../SFML-2.5.1/include -I$(HEADERS)
+BUILD=./build
+SRC=./src
+HEADERS=./src/headers
+COMPILE=g++ -std=c++17 -c $< $(ISFML) -o $(BUILD)
+
+asteroid: $(BUILD)/main.o $(BUILD)/ship.o $(BUILD)/textures.o $(BUILD)/movement.o 
+	g++ -std=c++17 $^ $(LSFML) -o ./$@
+
+$(BUILD)/main.o: $(SRC)/main.cpp
+	$(COMPILE)/main.o
+
+$(BUILD)/ship.o: $(SRC)/ship.cpp $(HEADERS)/ship.hpp
+	$(COMPILE)/ship.o
+
+$(BUILD)/textures.o: $(SRC)/textures.cpp $(HEADERS)/textures.hpp
+	$(COMPILE)/textures.o
+
+$(BUILD)/movement.o: $(SRC)/movement.cpp $(HEADERS)/movement.hpp
+	$(COMPILE)/movement.o
+clear:
+	rm -rf ./asteroid $(BUILD)/*
+
+.PHONY: clear
