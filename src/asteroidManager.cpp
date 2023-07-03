@@ -142,8 +142,9 @@ void AsteroidManager::checkIfDestroyed()
             t++;
             for(j = 0; j < 2; j++)
             {
+                std::cout << t << " " << a.n << std::endl;
                 spawned++;
-                asteroids.push_back({new Asteroid(getRandomN() + t, getRandomRotation(), a.a->getPosition()), t});
+                asteroids.push_back({new Asteroid(getRandomN() + (3*t), getRandomRotation(), a.a->getPosition()), t});
             }
             deleteFromList(a);
             spawned--;

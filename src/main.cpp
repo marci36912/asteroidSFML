@@ -1,6 +1,5 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
-#include "shipShape.hpp"
 #include "textures.hpp"
 #include "ship.hpp"
 #include "bullet.hpp"

@@ -2,6 +2,8 @@
 #include <SFML/Graphics.hpp>
 
 class Movement{
+    public:
+        static void changeDebug();
     protected:
         sf::Vector2f speed;
         float rotation;
@@ -12,4 +14,8 @@ class Movement{
         void updateRotation(sf::Transformable &t);
         void updateRotation(float r);
         void clampSpeed(float lower, float upper, int n);
+        void showDebug(sf::FloatRect t, sf::RenderWindow &w);
+    private:
+        static bool debug;
+        sf::RectangleShape hitbox;
 };

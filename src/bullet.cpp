@@ -14,6 +14,7 @@ Bullet::Bullet(float r, sf::Vector2f p)
 
 void Bullet::showBullet(sf::RenderWindow &w)
 {
+    showDebug(getBoundingBox(), w);
     w.draw(bullet);
 }
 

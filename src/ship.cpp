@@ -21,6 +21,7 @@ void Ship::showShip(sf::RenderWindow &w)
 {
     if(alive)
     {
+        showDebug(ship.getGlobalBounds(), w);
         w.draw(ship);
     }
     else
@@ -62,6 +63,8 @@ void Ship::KeyReleased(sf::Event e)
         case sf::Keyboard::D:
             d = false;
             break;
+        case sf::Keyboard::G:
+            Movement::changeDebug();
         default:
             break;
     }

@@ -24,6 +24,7 @@ void Asteroid::setAsteroidTextures(sf::Texture *t)
 
 void Asteroid::showAsteroid(sf::RenderWindow &w)
 {
+    showDebug(getBoundingBox(), w);
     w.draw(asteroid);
 }
 

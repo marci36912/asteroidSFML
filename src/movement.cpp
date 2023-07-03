@@ -4,6 +4,8 @@
 #include "movement.hpp"
 #include "consts.hpp"
 
+bool Movement::debug = false;
+
 float Movement::getSine()
 {
     return std::sin(radian(rotation));
@@ -73,4 +75,23 @@ void Movement::clampSpeed(float lower, float upper, int n)
         default:
             break;
     }
+}
+
+void Movement::showDebug(sf::FloatRect t, sf::RenderWindow &w)
+{
+    if(debug)
+    {
+        hitbox.setSize(sf::Vector2f(t.height, t.width));
+        hitbox.setOutlineColor(sf::Color(255,0,0,255));
+        hitbox.setOutlineThickness(1);
+        hitbox.setFillColor(sf::Color(0,0,0,0));
+        hitbox.setPosition(sf::Vector2f(t.left, t.top));
+
+        w.draw(hitbox);
+    }
+}
+
+void Movement::changeDebug()
+{
+    debug = !debug;
 }
