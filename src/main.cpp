@@ -30,7 +30,7 @@ int main()
         deltaTime = t.asSeconds();
 
         ship.move(deltaTime);
-        ship.checkAlive(deltaTime);
+        ship.checkAlive();
 
         bulletManager.deleteBullets(deltaTime);
         bulletManager.moveBullets(deltaTime);

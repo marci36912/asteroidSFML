@@ -13,19 +13,26 @@ class Ship : public Movement{
         void KeyReleased(sf::Event e);
         void move(float t);
         void getPosition(float &r, sf::Vector2f &p);
-        void checkAlive(float t);
+        void checkAlive();
         void setAlive();
         bool getAlive();
         void freeLines();
+        void addPoints(int n);
         sf::FloatRect getBoundingBox();
     private:
         sf::RectangleShape *lines;
         sf::Sprite ship;
+        sf::Font font;
+        sf::Text pointsText;
         int lives;
+        unsigned int points;
         bool w, a, d;
         bool alive;
+        bool invincible;
+        bool couldLoadFont;
         float t;
-        float cooldown;
+        float respawnCooldown;
+        float invincibilityCooldown;
         void rotate(float r);
         void addSpeed();
         void decreaseSpeed();

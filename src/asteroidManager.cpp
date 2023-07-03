@@ -39,17 +39,16 @@ void AsteroidManager::spawnManager(float t)
     if(cooldown == 0)
     {
         //spawn
-        if(spawnedTotal < 5)
+        if(spawnedTotal < MAXASTEROIDS)
         {
             asteroids.push_back({new Asteroid(getRandomN(), getRandomRotation(), sf::Vector2f(0, getRandomPosition())), 0});
 
             spawned++;
             spawnedTotal++;
         }
-        else if(spawnedTotal >= 5 && spawned == 0)
+        else if(spawnedTotal >= MAXASTEROIDS && spawned == 0)
         {
             spawnedTotal = 0;
-            //kor++?
         }
 
         cooldown = ASTEROIDSPAWNCOOLDOWN;
@@ -142,17 +141,18 @@ void AsteroidManager::checkIfDestroyed()
             t++;
             for(j = 0; j < 2; j++)
             {
-                std::cout << t << " " << a.n << std::endl;
                 spawned++;
                 asteroids.push_back({new Asteroid(getRandomN() + (3*t), getRandomRotation(), a.a->getPosition()), t});
             }
             deleteFromList(a);
             spawned--;
+            ship->addPoints(POINTBIG);
         }
         else if(tmpB)
         {
             deleteFromList(a);
             spawned--;
+            ship->addPoints(POINTSMALL);
         }
         i++;
     }

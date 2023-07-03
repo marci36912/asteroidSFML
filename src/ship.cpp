@@ -1,4 +1,5 @@
 #include <SFML/Graphics.hpp>
+#include <string>
 #include <iostream>
 #include "ship.hpp"
 #include "consts.hpp"
@@ -7,12 +8,32 @@ Ship::Ship(const sf::Texture *t)
 {
     speed = sf::Vector2f(0,0);
     w = a = d = false;
+    lives = LIVES;
+    alive = true;
+    invincible = false;
+    invincibilityCooldown = 0;
+    points = 0;
+
     ship.setTexture(*t);
+
     sf::Vector2u tmp = t->getSize();
     ship.setOrigin(sf::Vector2f(tmp.x/2, tmp.y/2));
     ship.setPosition(sf::Vector2f(WIN_WIDTH/2, WIN_HEIGTH/2));
-    lives = LIVES;
-    alive = true;
+
+    if(font.loadFromFile("./fonts/hyperspace.ttf"))
+    {
+        pointsText.setFont(font);
+        pointsText.setCharacterSize(24);
+        pointsText.setFillColor(sf::Color::White);
+        pointsText.setFillColor(sf::Color::White);
+        pointsText.setPosition(10, 10);
+        couldLoadFont = true;
+    }
+    else
+    {
+        couldLoadFont = false;
+    }
+
     lines = new sf::RectangleShape[4];
     fillLines();
 }
@@ -32,6 +53,9 @@ void Ship::showShip(sf::RenderWindow &w)
             lines[i].rotate(t * 250);
         }
     }
+
+    if(couldLoadFont)
+        w.draw(pointsText);
 }
 
 void Ship::keyPressed()
@@ -141,23 +165,36 @@ sf::FloatRect Ship::getBoundingBox()
     return ship.getGlobalBounds();
 }
 
-void Ship::checkAlive(float t)
+void Ship::checkAlive()
 {
-    if(!alive && lives != 0 && cooldown < 0)
+    if(!alive && lives != 0 && respawnCooldown < 0)
     {
         ship.setPosition(sf::Vector2f(WIN_WIDTH/2, WIN_HEIGTH/2));
+        ship.setColor(sf::Color::Red);
         alive = true;
+        invincible = true;
+        invincibilityCooldown = INVINCIBILITY;
     }
-    cooldown -= t;
+    else if(invincible && invincibilityCooldown < 0)
+    {
+        ship.setColor(sf::Color::White);
+        invincible = false;
+    }
+    respawnCooldown -= t;
+    invincibilityCooldown -= t;
 }
 
 void Ship::setAlive()
 {
-    alive = false;
-    lives--;
-    cooldown = DEATHCOOLDOWN;
-    speed = sf::Vector2f(0,0);
-    setLinePosition();
+    if(!invincible)
+    {
+        alive = false;
+        lives--;
+        respawnCooldown = DEATHCOOLDOWN;
+        speed = sf::Vector2f(0,0);
+        setLinePosition();
+    }
+
 }
 
 bool Ship::getAlive()
@@ -194,4 +231,12 @@ void Ship::freeLines()
         delete[] lines;
         lines = NULL;
     }
+}
+
+void Ship::addPoints(int n)
+{
+    points += n;
+
+    if(couldLoadFont)
+        pointsText.setString(lives != 0 ? std::to_string(points) : ("You lost! Your final point: " + std::to_string(points)));
 }
