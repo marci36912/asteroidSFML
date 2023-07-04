@@ -8,6 +8,7 @@
 #include "consts.hpp"
 #include "asteroid.hpp"
 #include "ship.hpp"
+#include "particles.hpp"
 
 AsteroidManager::AsteroidManager(Ship &s, BulletManager &b)
 {
@@ -32,6 +33,11 @@ int AsteroidManager::getRandomRotation()
 int AsteroidManager::getRandomPosition()
 {
     return rand() % WIN_HEIGTH;
+}
+
+int AsteroidManager::getRandomParticles()
+{
+    return ((rand() % 100) + 20);
 }
 
 void AsteroidManager::spawnManager(float t)
@@ -69,6 +75,8 @@ void AsteroidManager::showAsteroids(sf::RenderWindow &w)
     {
         a.a->showAsteroid(w);
     }
+
+    particleManager.showParticles(w);
 }
 
 void AsteroidManager::moveAsteroids(float t)
@@ -77,6 +85,8 @@ void AsteroidManager::moveAsteroids(float t)
     {
         a.a->move(t);
     }
+
+    particleManager.updateParticles(t);
 }
 
 void AsteroidManager::checkBounds()
@@ -119,6 +129,7 @@ void AsteroidManager::deleteFromList(AsteroidHolder a)
         {
             if(aste.a != NULL)
             {
+                particleManager.newParticles(a.a->getPosition(), getRandomParticles());
                 delete aste.a;
                 aste.a = NULL;
             }
@@ -164,4 +175,6 @@ void AsteroidManager::freeAsteroids()
     {
         deleteFromList(a);
     }
+
+    particleManager.freeParticles();
 }

@@ -3,6 +3,7 @@
 #include "bulletManager.hpp"
 #include "asteroid.hpp"
 #include "ship.hpp"
+#include "particles.hpp"
 
 struct AsteroidHolder{
     Asteroid * a;
@@ -25,10 +26,12 @@ class AsteroidManager{
         bool tmpB;
         Ship *ship;
         BulletManager *bulletManager;
+        ParticleManager particleManager;
         std::vector<AsteroidHolder> asteroids;
         int getRandomN();
         int getRandomRotation();
         int getRandomPosition();
+        int getRandomParticles();
         void checkBounds();
         void checkIfDestroyed();
         void deleteFromList(AsteroidHolder a);
